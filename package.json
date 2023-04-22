@@ -1,0 +1,22 @@
+{
+  "name": "cse-341-webservices",
+  "version": "1.0.0",
+  "description": "Repository for CSE 341 at BYU-I",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Ian Moes",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "CSE-341-WebServices"
+  },
+  "keywords": [
+    "CSE-341"
+  ],
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
