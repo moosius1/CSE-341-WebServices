@@ -1,7 +1,11 @@
 // express web server
-
+import(dotenv);
 const express = require('express');
+const dotenv = require('dotenv');
 const app = express();
+
+dotenv.config();
+console.log(dotenv.env.DB_USERNAME);
 
 const port = 3000;
  
