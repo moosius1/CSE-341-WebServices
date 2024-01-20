@@ -1,39 +1,33 @@
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 dotenv.config();
-console.log(process.env.DB_USERNAME);
-const uri = "mongodb+srv://imoe61:8141668!An@first-database.yc4ev7y.mongodb.net/?retryWrites=true&w=majority";
+const MongoClient = require('mongodb').MongoClient;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+let _db;
+
+const initDb = (callback) => {
+  if (_db) {
+    console.log('Db is already initialized!');
+    return callback(null, _db);
   }
-});
+  MongoClient.connect(process.env.MONGODB_URI)
+    .then((client) => {
+      _db = client;
+      callback(null, _db);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+};
 
-const contacts = database.collection("contacts");
-
-
-async function run() {
-  try {
-    const database = client.db("first-database");
-    const contacts = database.collection("contacts");
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    
-    console.log(contacts);
-    
-    
-    
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+const getDb = () => {
+  if (!_db) {
+    throw Error('Db not initialized');
   }
-}
-run().catch(console.dir);
+  return _db;
+};
+
+module.exports = {
+  initDb,
+  getDb,
+};
+

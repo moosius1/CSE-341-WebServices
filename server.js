@@ -1,17 +1,29 @@
-// express web server
-
-const dotenv = require('dotenv');
-dotenv.config();
 
 const express = require('express');
-const app = express();
-
-console.log(process.env.DB_USERNAME);
+const bodyParser = require('body-parser');
+const mongodb = require('./mongoConnection');
 
 const port = process.env.PORT || 3000;
+const app = express();
 
-app.use('/', require('./routes'));
 
-app.listen(port, () => {
-  console.log('Web Server is listening at port ' + port);
+
+
+
+app
+.use(bodyParser.json())
+.use((req, res, next)=>{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+})
+.use('/', require('./routes'));
+
+mongodb.initDb((err, mongodb)=>{
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(port);
+    console.log(`Connected to Mongo Database on port ${port}`);
+  }
 });
+
