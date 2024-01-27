@@ -89,7 +89,7 @@ const deleteEntry = async(req,res) =>{
     .collection('contacts')
     .deleteOne({ _id: userId}, true);
     if(result.deletedCount > 0) {
-        res.status(204).send(result);
+        res.status(200).send(result);
     } else {
         res.status(500).json(result.error || 'Error Contact previously deleted or does not exist') 
     }
