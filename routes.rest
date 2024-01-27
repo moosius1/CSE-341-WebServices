@@ -40,3 +40,32 @@ Content-Type:application/json
 ###
 DELETE http://localhost:3000/contacts/65b4b6336f30bb7e67ac0da4 HTTP/1.1
 Content-Type:application/json
+###
+POST https://cse-341-webservices.onrender.com/contacts HTTP/1.1 
+content-type:application/json
+
+{
+    "firstName":"DELETE ME",
+    "lastName":"Moes",
+    "email":"imoes@test.com",
+    "favoriteColor":"red",
+    "birthday":"01/01/2000"
+    
+}
+###
+
+PUT https://cse-341-webservices.onrender.com/contacts/65ab727a15ad91890852ae2e HTTP/1.1
+Content-Type:application/json
+
+{
+    "firstName":"Eddy",
+    "lastName":"Moes",
+    "email":"emoes@test.com",
+    "favoriteColor":"blue",
+    "birthday":"01/01/2000"
+}
+
+###
+DELETE https://cse-341-webservices.onrender.com/contacts/65b4b87b966f88eb1f2d60f7 HTTP/1.1
+Content-Type:application/json
+###
