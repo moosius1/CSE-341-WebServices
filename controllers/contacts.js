@@ -4,20 +4,21 @@ const bodyParser = require('body-parser');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res, next) =>{
-    
+    try{
     const result = await mongodb.getDb().db("test-contacts").collection('contacts').find();
     
     result.toArray().then((lists)=>{
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(lists);
         console.log(lists);
-        
-        
-        
     });
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
 const getSingle = async (req, res, next) =>{
+    try{
     const userId = new ObjectId(req.params.id);
     const result = await mongodb
     .getDb()
@@ -28,6 +29,10 @@ result.toArray().then((lists) =>{
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(lists[0]);
 });
+    } catch (err) {
+    res.status(500).json(err);
+}
+
 };
 //testing
 const eddyRoute = (req, res) =>{
@@ -37,6 +42,7 @@ const eddyRoute = (req, res) =>{
 
 
 const createNew = async(req,res) =>{
+    try{
     const contact= {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -51,9 +57,13 @@ const createNew = async(req,res) =>{
     else{
         res.status(500).json(response.error || 'Error while creating contact');
     }
+    } catch (err) {
+    res.status(500).json(err);
+}
 };
 
 const updateExisting = async (req,res) =>{
+    try{
     const userId = new ObjectId(req.params.id);
     //taken from create new same structure
     const contact= {
@@ -79,9 +89,14 @@ const updateExisting = async (req,res) =>{
     } else {
         res.status(500).json(result.error || 'Error while updating contact')
     }
+
+} catch (err) {
+    res.status(500).json(err);
+}
 };
 
 const deleteEntry = async(req,res) =>{
+    try{
     const userId = new ObjectId(req.params.id);
     const result = await mongodb
     .getDb()
@@ -93,6 +108,10 @@ const deleteEntry = async(req,res) =>{
     } else {
         res.status(500).json(result.error || 'Error Contact previously deleted or does not exist') 
     }
+
+    } catch (err) {
+    res.status(500).json(err);
+}
 };
 
 
